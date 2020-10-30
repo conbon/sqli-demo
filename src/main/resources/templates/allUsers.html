@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>WANdisco Data Academy</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th> First Name </th>
+        <th> Fav Colour </th>
+        <th> Fav Animal </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${users.empty}">
+        <td colspan="2"> No users found ¯\_(ツ)_/¯ </td>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td><span th:text="${user.firstName}"> FirstName </span></td>
+        <td><span th:text="${user.favouriteColour}"> Fav Colour </span></td>
+        <td><span th:text="${user.favouriteAnimal}"> Fav Animal </span></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
