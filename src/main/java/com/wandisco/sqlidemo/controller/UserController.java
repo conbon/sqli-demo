@@ -1,12 +1,14 @@
 package com.wandisco.sqlidemo.controller;
 
 import com.wandisco.sqlidemo.model.User;
+import com.wandisco.sqlidemo.repository.PostgresRepository;
 import com.wandisco.sqlidemo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -15,7 +17,7 @@ public class UserController {
     private UserRepository repository;
 
     @Autowired
-    public UserController(UserRepository repository) {
+    public UserController(PostgresRepository repository) {
         this.repository = repository;
     }
 
@@ -27,12 +29,12 @@ public class UserController {
 
     @GetMapping("/user/{id}")
     public User getUser(@PathVariable String id) {
-        return User.builder()
-                .id(UUID.randomUUID().toString())
-                .firstName("Conal")
-                .favouriteColour("red")
-                .favouriteAnimal("dog")
-                .build();
+        return repository.getUser(id);
+    }
+
+    @GetMapping("/user")
+    public List<User> findUser(@RequestParam(name = "search") String search) {
+        return repository.findUsers(search);
     }
 
     @GetMapping("/user/form")
