@@ -25,7 +25,7 @@ public class InMemoryRepository implements UserRepository {
 
     @Override
     public List<User> getUsers() {
-        return users;
+        return null;
     }
 
     @Override

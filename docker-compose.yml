@@ -1,0 +1,12 @@
+version: '3'
+services:
+  database:
+    image: "postgres" # use latest official postgres version
+    env_file:
+      - database.env # configure postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+volumes:
+  db-data: # named volumes can be managed easier using docker-compose

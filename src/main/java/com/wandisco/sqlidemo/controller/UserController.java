@@ -37,7 +37,7 @@ public class UserController {
         return repository.findUsers(search);
     }
 
-    @GetMapping("/user/form")
+    @GetMapping("/")
     public String getUserForm(Model model) {
         final User exampleUser = User.builder()
                 .id(UUID.randomUUID().toString())

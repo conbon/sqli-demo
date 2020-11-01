@@ -1,8 +1,10 @@
 package com.wandisco.sqlidemo.repository;
 
 import com.google.common.collect.Lists;
-import com.wandisco.sqlidemo.config.DataSource;
+import com.wandisco.sqlidemo.config.PGDataSource;
 import com.wandisco.sqlidemo.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,26 +17,33 @@ import java.util.List;
 @Repository
 public class PostgresRepository implements UserRepository {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PostgresRepository.class);
+
+    private PGDataSource PGDataSource;
+
     @Autowired
-    public PostgresRepository() {
+    public PostgresRepository(PGDataSource PGDataSource) {
+        this.PGDataSource = PGDataSource;
     }
 
     @Override
     public User getUser(String id) {
-        try (Connection conn = DataSource.getConnection()) {
+        LOGGER.info("Getting user by id: {}", id);
+        try (Connection conn = PGDataSource.getConnection()) {
             try (Statement statement = conn.createStatement()) {
                 String sql = "SELECT * from sqli_demo.user_details WHERE user_id = " + id + ";";
                 return mapRs(statement.executeQuery(sql));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error("SQL error: {}", e.getSQLState());
         }
         return null;
     }
 
     @Override
     public List<User> findUsers(String search) {
-        try (Connection conn = DataSource.getConnection()) {
+        LOGGER.info("Finding users by search term: {}", search);
+        try (Connection conn = PGDataSource.getConnection()) {
             try (Statement statement = conn.createStatement()) {
                 String sql = "SELECT * from sqli_demo.user_details WHERE first_name LIKE '" + search + ";";
                 List<User> users = Lists.newArrayList();
@@ -45,14 +54,15 @@ public class PostgresRepository implements UserRepository {
                 return users;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error("SQL error: {}", e.getSQLState());
         }
         return null;
     }
 
     @Override
     public List<User> getUsers() {
-        try (Connection conn = DataSource.getConnection()) {
+        LOGGER.info("Getting users");
+        try (Connection conn = PGDataSource.getConnection()) {
             try (Statement statement = conn.createStatement()) {
                 String sql = "SELECT * from sqli_demo.user_details;";
                 List<User> users = Lists.newArrayList();
@@ -63,22 +73,24 @@ public class PostgresRepository implements UserRepository {
                 return users;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error("SQL error: {}", e.getSQLState());
         }
         return null;
     }
 
     @Override
     public boolean saveUser(User user) {
+        LOGGER.info("Saving user: {}", user.getFirstName());
+
         int result = 0;
-        try (Connection conn = DataSource.getConnection()) {
+        try (Connection conn = PGDataSource.getConnection()) {
             try (Statement statement = conn.createStatement()) {
                 String sql = "INSERT INTO sqli_demo.user_details(id, first_name, favourite_colour, favourite_animal) " +
                              "VALUES ('"+ user.getId() +"', '"+ user.getFirstName() +"', '"+ user.getFavouriteColour() +"', '"+ user.getFavouriteAnimal() +"');";
                 result = statement.executeUpdate(sql);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error("SQL error: {}", e.getSQLState());
         }
         return result == 0;
     }

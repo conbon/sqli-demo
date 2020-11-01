@@ -1,26 +1,26 @@
 package com.wandisco.sqlidemo.respository;
 
-import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
-import org.flywaydb.test.annotation.FlywayTest;
+import com.wandisco.sqlidemo.config.PGDataSource;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-@RunWith(SpringRunner.class)
-@FlywayTest
-@AutoConfigureEmbeddedDatabase(beanName = "dataSource")
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+//@FlywayTest
+//@AutoConfigureEmbeddedDatabase(beanName = "dataSource")
 public class PostgresRepositoryTest {
 
     @Autowired
-    private DataSource dataSource;
+    private PGDataSource PGDataSource;
 
     @Test
     public void test() throws SQLException {
-        Connection conn = dataSource.getConnection();
+        Connection conn = PGDataSource.getConnection();
     }
 }

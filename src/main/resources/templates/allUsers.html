@@ -1,28 +1,45 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>WANdisco Data Academy</title>
+    <title>sqli_demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        .content {
+            max-width: 500px;
+            margin: auto;
+        }
+        .header {
+            max-width: 700px;
+            margin: auto;
+            align-content: center;
+        }
+    </style>
 </head>
 <body>
-<table>
-    <thead>
-    <tr>
-        <th> First Name </th>
-        <th> Fav Colour </th>
-        <th> Fav Animal </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${users.empty}">
-        <td colspan="2"> No users found ¯\_(ツ)_/¯ </td>
-    </tr>
-    <tr th:each="user : ${users}">
-        <td><span th:text="${user.firstName}"> FirstName </span></td>
-        <td><span th:text="${user.favouriteColour}"> Fav Colour </span></td>
-        <td><span th:text="${user.favouriteAnimal}"> Fav Animal </span></td>
-    </tr>
-    </tbody>
-</table>
+<div class="header">
+    <h1>Let's see what's in the database...</h1>
+</div>
+<div class="content">
+    <table class="table">
+        <tr th:if="${users.empty}">
+            <td colspan="2"> No users found ¯\_(ツ)_/¯ </td>
+        </tr>
+        <thead>
+        <tr th:if="!${users.empty}">
+            <th> First Name </th>
+            <th> Fav Colour </th>
+            <th> Fav Animal </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td><span th:text="${user.firstName}"> FirstName </span></td>
+            <td><span th:text="${user.favouriteColour}"> Fav Colour </span></td>
+            <td><span th:text="${user.favouriteAnimal}"> Fav Animal </span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
