@@ -2,6 +2,7 @@ package com.wandisco.sqlidemo.controller;
 
 import com.wandisco.sqlidemo.model.User;
 import com.wandisco.sqlidemo.repository.PostgresRepository;
+import com.wandisco.sqlidemo.repository.SecurePostgresRepository;
 import com.wandisco.sqlidemo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,7 @@ public class UserController {
     private UserRepository repository;
 
     @Autowired
-    public UserController(PostgresRepository repository) {
+    public UserController(SecurePostgresRepository repository) {
         this.repository = repository;
     }
 
