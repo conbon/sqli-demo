@@ -30,5 +30,28 @@
     </form>
     <iframe src="https://giphy.com/embed/NSGs4EkWEyL9jua2f2" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/tiktok-NSGs4EkWEyL9jua2f2">via GIPHY</a></p>
 </div>
+<div id='metrics' style="visibility: hidden">
+    <span>
+        <p>Custom developer page metrics... PageLoad[435ms]</p>
+    </span>
+</div>
+<script>
+    var userInput = getQueryVariable('displayCustomMetrics');
+
+    console.log("User Input: " + userInput);
+
+    document.getElementById('metrics').style.visibility='' + userInput + '';
+
+    function getQueryVariable(variable)
+    {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+    }
+</script>
 </body>
 </html>
