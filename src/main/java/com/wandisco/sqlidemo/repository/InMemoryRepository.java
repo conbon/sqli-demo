@@ -1,11 +1,13 @@
 package com.wandisco.sqlidemo.repository;
 
 import com.wandisco.sqlidemo.model.User;
+import com.wandisco.sqlidemo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -15,17 +17,21 @@ public class InMemoryRepository implements UserRepository {
 
     @Override
     public User getUser(String id) {
-        return null;
+        return users.stream()
+                .filter(u -> u.getId().equals(id))
+                .findFirst().orElse(User.builder().build());
     }
 
     @Override
     public List<User> findUsers(String search) {
-        return null;
+        return users.stream()
+                .filter(u -> u.getFirstName().contains(search))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<User> getUsers() {
-        return null;
+        return users;
     }
 
     @Override

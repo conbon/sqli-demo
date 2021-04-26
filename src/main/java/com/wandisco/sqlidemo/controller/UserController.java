@@ -1,6 +1,7 @@
 package com.wandisco.sqlidemo.controller;
 
 import com.wandisco.sqlidemo.model.User;
+import com.wandisco.sqlidemo.repository.InMemoryRepository;
 import com.wandisco.sqlidemo.repository.PostgresRepository;
 import com.wandisco.sqlidemo.repository.SecurePostgresRepository;
 import com.wandisco.sqlidemo.repository.UserRepository;
@@ -18,7 +19,7 @@ public class UserController {
     private UserRepository repository;
 
     @Autowired
-    public UserController(SecurePostgresRepository repository) {
+    public UserController(InMemoryRepository repository) {
         this.repository = repository;
     }
 
